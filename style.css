@@ -1,0 +1,174 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-navbar-background: aqua;
+  --color-node-unvisited: #ffff;
+  /* --color-node-visited: #00b5ff; */
+  --color-node-visited: rgba(0, 181, 255, 1);
+  --color-node-wall: rgb(0, 0, 0);
+  --color-node-shortest-path: #fffc00e6;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.navbar {
+  width: 100%;
+  margin-bottom: 50px;
+  background-color: var(--color-navbar-background);
+}
+.nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20rem;
+  padding: 20px;
+}
+
+.dropbtn {
+  /* background-color: transparent; */
+  /* padding: 16px;
+  font-size: 16px; */
+  /* border: none; */
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--color-navbar-background);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+table,
+td {
+  border: 1px solid;
+  /* margin: 0 0 0 0; */
+}
+
+table {
+  border-spacing: 0px;
+  margin: 0 auto;
+}
+td {
+  width: 25px;
+  height: 25px;
+
+  border: 1px solid #002fff24;
+}
+
+.unvisited {
+  background-color: var(--color-node-unvisited);
+}
+
+.visited {
+  animation-name: visitedNodeAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedNodeAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgb(255, 255, 255);
+  }
+
+  50% {
+    background-color: rgb(163, 228, 254);
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: rgb(80, 200, 247);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(0, 181, 255, 1);
+  }
+}
+
+.shortest-path {
+  background-color: var(--color-node-shortest-path);
+  animation-name: shortestPathAnimation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes shortestPathAnimation {
+  0% {
+    transform: scale(0.6);
+    background-color: rgba(254, 254, 237, 0.9);
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: rgba(252, 251, 151, 0.9);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(255, 252, 0, 0.9);
+  }
+}
+.start {
+  background-image: url(./public/start.svg);
+  background-repeat: no-repeat, repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.wall {
+  background-color: var(--color-node-wall);
+}
+
+.target {
+  background-image: url(./public/target.svg);
+  background-repeat: no-repeat, repeat;
+  background-size: contain;
+  background-position: center;
+}
