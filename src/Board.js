@@ -2,6 +2,7 @@ import Node from "./Node.js";
 import startAnimation from "./animations/startAnimation.js";
 import a_star from "./pathfinding-algorithms/a-start.js";
 import bfs from "./pathfinding-algorithms/bfs.js";
+import dfs from "./pathfinding-algorithms/dfs.js";
 import dijkstra from "./pathfinding-algorithms/dijkstra.js";
 
 class Board {
@@ -13,7 +14,7 @@ class Board {
   nodesToAnimate = [];
   hasEnded = false;
 
-  current_algorithm = "bfs"; //TODO think on default value
+  current_algorithm = "";
 
   constructor(width, height) {
     this.#init(width, height);
@@ -80,11 +81,32 @@ class Board {
       .getElementById("reset-button")
       .addEventListener("click", this.#resetButtonClickHandler.bind(this));
 
+    document
+      .getElementById("generate-maze-button")
+      .addEventListener("click", this.#generateMazeButtonClickHandler.bind(this));
+
     window.mouseDown = false;
     window.onmousedown = () => (window.mouseDown = true);
     window.onmouseup = () => (window.mouseDown = false);
   }
 
+  #generateMazeButtonClickHandler() {
+    this.#resetAll();
+
+    const probability = 0.3;
+
+    let nodesElements = document.querySelectorAll("td");
+    for (const nodeElement of nodesElements) {
+      if (nodeElement.className == "start" || nodeElement.className == "target")
+        continue;
+
+      let node = this.getNodeById(nodeElement.id);
+      if (Math.random() <= probability) {
+        nodeElement.className = "wall";
+        node.type = "wall";
+      }
+    }
+  }
   #addWallOnClickHandler(event) {
     if (!window.mouseDown) return;
     let nodeId = event.srcElement.id;
@@ -95,19 +117,62 @@ class Board {
   }
 
   #pickAlgorithmHandler(event) {
-    console.log(event.srcElement.id);
     this.current_algorithm = event.srcElement.id;
+    this.#showAlgorithmInfo();
+    document.getElementById("start-button").style.cursor = "pointer";
+  }
+  #showAlgorithmInfo() {
+    let content = "";
+    switch (this.current_algorithm) {
+      case "dfs":
+        content = " Dfs algorithm doesn't guarantees the optimal path";
+        break;
+      case "bfs":
+        content = " Bfs algorithm guarantees the optimal path";
+        break;
+
+      case "dijkstra":
+        content = " dijkstra algorithm guarantees the optimal path";
+        break;
+
+      case "a-star":
+        content = " A* algorithm guarantees the optimal path";
+        break;
+    }
+    document.querySelector(".banner-content").textContent = content;
   }
 
   #startButtonClickHandler(_event) {
+    if (this.current_algorithm == "") return;
+
     if (this.hasEnded) {
-      this.#resetAll();
+      this.#resetPath();
     }
 
     this.startPathFinding();
   }
   #resetButtonClickHandler(_event) {
     this.#resetAll();
+  }
+  #resetPath() {
+    //TODO refactor
+    this.hasEnded = false;
+    let nodesElements = document.querySelectorAll("td");
+    for (const nodeElement of nodesElements) {
+      let node = this.getNodeById(nodeElement.id);
+      node.parentNodeId = undefined;
+      node.distance = Infinity;
+      node.heuristicDistance = 0;
+      if (
+        nodeElement.className == "start" ||
+        nodeElement.className == "target" ||
+        nodeElement.className == "wall"
+      )
+        continue;
+
+      nodeElement.className = "unvisited";
+      node.type = "unvisited";
+    }
   }
   #resetAll() {
     this.hasEnded = false;
@@ -130,7 +195,9 @@ class Board {
     let startNode = this.getNodeById(this.start);
     this.nodesToAnimate = [];
 
-    if (this.current_algorithm == "bfs")
+    if (this.current_algorithm == "dfs")
+      dfs(this.gridMatrix, startNode, this.target, this.nodesToAnimate);
+    else if (this.current_algorithm == "bfs")
       bfs(this.gridMatrix, startNode, this.target, this.nodesToAnimate);
     else if (this.current_algorithm == "a-star")
       a_star(this.gridMatrix, startNode, this.target, this.nodesToAnimate);

@@ -2,10 +2,13 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
 }
 
 :root {
-  --color-navbar-background: aqua;
+  --color-navbar-background: #0c3e64;
+  --color-selected-item: #94d0f4;
   --color-node-unvisited: #ffff;
   /* --color-node-visited: #00b5ff; */
   --color-node-visited: rgba(0, 181, 255, 1);
@@ -23,6 +26,8 @@ body {
   min-height: 100%;
 }
 
+/*? Nav bar styles */
+
 .navbar {
   width: 100%;
   margin-bottom: 50px;
@@ -30,19 +35,29 @@ body {
 }
 .nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   gap: 20rem;
   padding: 20px;
 }
 
-.dropbtn {
-  /* background-color: transparent; */
-  /* padding: 16px;
-  font-size: 16px; */
-  /* border: none; */
+button {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
 }
 
+button:hover {
+  background-color: var(--color-selected-item);
+  cursor: pointer;
+}
+
+.dropbtn:hover {
+  cursor: default;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -52,30 +67,39 @@ body {
   display: none;
   position: absolute;
   background-color: var(--color-navbar-background);
-  min-width: 160px;
+  min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
+  color: white;
+  padding: 20px 13px;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: var(--color-selected-item);
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+#start-button {
+  cursor: not-allowed;
+}
+/*? Banner styles  */
+.banner {
+  margin: 0 auto;
+  text-align: center;
+}
+.banner-content {
+  font-weight: 600;
 }
 
+/*? Grid table style  */
 table,
 td {
   border: 1px solid;
@@ -101,7 +125,7 @@ td {
   animation-name: visitedNodeAnimation;
   animation-duration: 1.5s;
   animation-timing-function: ease-out;
-  animation-delay: 0;
+  animation-delay: 0.2s;
   animation-direction: alternate;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -129,11 +153,11 @@ td {
 }
 
 .shortest-path {
-  background-color: var(--color-node-shortest-path);
+  /* background-color: var(--color-node-shortest-path); */
   animation-name: shortestPathAnimation;
   animation-duration: 1s;
   animation-timing-function: linear;
-  animation-delay: 0;
+  animation-delay: 0.2s;
   animation-direction: alternate;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -143,7 +167,7 @@ td {
 @keyframes shortestPathAnimation {
   0% {
     transform: scale(0.6);
-    background-color: rgba(254, 254, 237, 0.9);
+    background-color: rgba(167, 166, 108, 0.9);
   }
   50% {
     transform: scale(1.2);

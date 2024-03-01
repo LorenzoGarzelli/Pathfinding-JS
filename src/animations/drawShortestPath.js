@@ -1,16 +1,21 @@
 function drawShortestPath(gridMatrix, node, speed) {
-  if (node.type == "start") return;
+  let currentNode = node;
+  let cost = 0;
+  while (currentNode.type !== "start") {
+    cost += currentNode.weight;
+    if (currentNode.type !== "target")
+      // setTimeout(
+      //   () =>
+      document.getElementById(currentNode.nodeId).className = "shortest-path"; //,
+    //   speed
+    // );
 
-  if (node.type != "target")
-    setTimeout(
-      () => (document.getElementById(node.nodeId).className = "shortest-path"),
-      speed
-    );
-
-  let coordinates = node.parentNodeId.split("-");
-  let row = parseInt(coordinates[0]);
-  let column = parseInt(coordinates[1]);
-  return drawShortestPath(gridMatrix, gridMatrix[row][column]);
+    let coordinates = currentNode.parentNodeId.split("-");
+    let row = parseInt(coordinates[0]);
+    let column = parseInt(coordinates[1]);
+    currentNode = gridMatrix[row][column];
+  }
+  console.log(`total cost: ${cost}`);
 }
 
 export default drawShortestPath;

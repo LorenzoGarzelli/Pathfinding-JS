@@ -4,7 +4,6 @@ function manhattanDistance(nodeId, targetNodeId) {
   let [x, y] = nodeId.split("-");
   let [xTarget, yTarget] = targetNodeId.split("-");
 
-  console.log(nodeId, targetNodeId, Math.abs(x - xTarget) + Math.abs(y - yTarget));
   return Math.abs(x - xTarget) + Math.abs(y - yTarget);
 }
 
