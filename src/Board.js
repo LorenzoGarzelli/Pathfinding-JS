@@ -125,14 +125,14 @@ class Board {
     let content = "";
     switch (this.current_algorithm) {
       case "dfs":
-        content = " Dfs algorithm doesn't guarantees the optimal path";
+        content = " Depth-First Search algorithm does not guarantee the optimal path";
         break;
       case "bfs":
-        content = " Bfs algorithm guarantees the optimal path";
+        content = " Breath-First Search algorithm guarantees the optimal path";
         break;
 
       case "dijkstra":
-        content = " dijkstra algorithm guarantees the optimal path";
+        content = " Dijkstra algorithm guarantees the optimal path";
         break;
 
       case "a-star":
