@@ -123,7 +123,7 @@ td {
 
 .visited {
   animation-name: visitedNodeAnimation;
-  animation-duration: 1.5s;
+  animation-duration: 1.2s;
   animation-timing-function: ease-out;
   animation-delay: 0.2s;
   animation-direction: alternate;

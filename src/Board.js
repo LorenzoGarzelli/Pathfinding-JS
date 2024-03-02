@@ -155,8 +155,11 @@ class Board {
     this.#resetAll();
   }
   #resetPath() {
-    //TODO refactor
+    this.#resetAll(true);
+  }
+  #resetAll(except_wall = false) {
     this.hasEnded = false;
+
     let nodesElements = document.querySelectorAll("td");
     for (const nodeElement of nodesElements) {
       let node = this.getNodeById(nodeElement.id);
@@ -166,24 +169,8 @@ class Board {
       if (
         nodeElement.className == "start" ||
         nodeElement.className == "target" ||
-        nodeElement.className == "wall"
+        (nodeElement.className == "wall" && except_wall)
       )
-        continue;
-
-      nodeElement.className = "unvisited";
-      node.type = "unvisited";
-    }
-  }
-  #resetAll() {
-    this.hasEnded = false;
-
-    let nodesElements = document.querySelectorAll("td");
-    for (const nodeElement of nodesElements) {
-      let node = this.getNodeById(nodeElement.id);
-      node.parentNodeId = undefined;
-      node.distance = Infinity;
-      node.heuristicDistance = 0;
-      if (nodeElement.className == "start" || nodeElement.className == "target")
         continue;
 
       nodeElement.className = "unvisited";

@@ -1,14 +1,10 @@
-function drawShortestPath(gridMatrix, node, speed) {
+function drawShortestPath(gridMatrix, node) {
   let currentNode = node;
   let cost = 0;
   while (currentNode.type !== "start") {
     cost += currentNode.weight;
     if (currentNode.type !== "target")
-      // setTimeout(
-      //   () =>
-      document.getElementById(currentNode.nodeId).className = "shortest-path"; //,
-    //   speed
-    // );
+      document.getElementById(currentNode.nodeId).className = "shortest-path";
 
     let coordinates = currentNode.parentNodeId.split("-");
     let row = parseInt(coordinates[0]);
